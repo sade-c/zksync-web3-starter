@@ -64,12 +64,13 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
   }
   async onConnectTapped() {
 
-    this.isConected = await this.provider.connect()
+    this.isConected = await this.provider.zkConnect();
     console.log(`onConnectTapped, isConnected = ${this.isConected}`);
     if (this.isConected) {
       this.connect = "Connected";
       this.provider.getAccounts()
       this.createBlockie();
+
     } else {
       this.alertService.presentNoConnectionAlert();
 

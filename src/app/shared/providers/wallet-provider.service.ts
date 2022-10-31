@@ -36,8 +36,10 @@ export class WalletProviderService {
             let ethereum = await detectEthereumProvider();
             console.log('ethereum = ', ethereum)
             if (ethereum) {
-                await this.startApp(ethereum)
+                await this.startApp(ethereum);
+
                 return ethereum != undefined
+
             } else {
                 return false
             }
@@ -57,8 +59,9 @@ export class WalletProviderService {
         this.signer = await this.provider.getSigner()
         this.registerHandlers()
         if (ethereum.selectedAddress) {
-            ethereum.enable()
-            this.setCurrentAccount(ethereum.selectedAddress)
+            ethereum.enable();
+            this.setCurrentAccount(ethereum.selectedAddress);
+
         } else {
         }
         // if (provider !== window.ethereum) {
@@ -69,13 +72,27 @@ export class WalletProviderService {
         // }
     }
     async zkConnect() {
-        await this.connect();
-        this.provider = new Provider('https://zksync2-testnet.zksync.dev');
-        console.log(this.provider);
-        // Note that we still need to get the Metamask signer
-        this.signer = (new Web3Provider(this.ethereum)).getSigner();
-        console.log(this.signer);
 
+
+        try {
+            await this.connect();
+            this.provider = new Provider('https://zksync2-testnet.zksync.dev');
+            console.log(this.provider);
+            // Note that we still need to get the Metamask signer
+            this.signer = (new Web3Provider(this.ethereum)).getSigner();
+            console.log(this.signer);
+            if (this.signer) {
+
+
+                return true
+
+            } else {
+                return false
+            }
+        } catch (error) {
+            console.error('unable to detect ethereum provider: ', error)
+            return false
+        }
 
     }
 

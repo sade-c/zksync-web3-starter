@@ -4,8 +4,14 @@
 
 export const environment = {
   production: false,
+
+  ZKNETWORK: "https://rinkeby-api.zksync.io/jsrpc",
+  IPFS_GATEWAY: "https://ipfs.io/ipfs/",
+  ZK_EXPLORER: "https://ropsten.zkscan.io/explorer/transactions/",
+  ETH_EXPLORER: "https://ropsten.etherscan.io/tx/",
+  ZK_WALLET: "https://wallet.zksync.io/",
   environmentName: 'Avalanche Testnet C-Chain',
-  jsonRpcUrl: 'https://api.avax-test.network/ext/bc/C/rpc',
+  jsonRpcUrl: 'https://ropsten.infura.io/v3/9c3496dd968d444c8449af5e09168512',
   config: {
     contracts: {
       USDC: '',

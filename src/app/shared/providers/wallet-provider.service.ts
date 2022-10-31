@@ -5,20 +5,24 @@ import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { NetworkParams } from './network-params.interface';
 import { Angweb3Config } from './angweb3-config.interface';
-import { StringifyOptions } from 'querystring';
+import { Contract, Web3Provider, Provider } from "zksync-web3";
 
 @Injectable({
     providedIn: 'root'
 })
 export class WalletProviderService {
 
-    provider: any
-    ethereum
-    signer: Signer
+    provider: any;
+    ethereum: any;
+    signer: Signer;
 
     currentAccount
     currentNetwork: NetworkParams
     currentConfig: Angweb3Config;
+
+    syncWallet: any;
+    syncProvider: any;
+    syncConnected: boolean;
 
     connectedSubject: BehaviorSubject<boolean> = new BehaviorSubject(false);
     accountSubject: BehaviorSubject<any> = new BehaviorSubject(null)
@@ -48,6 +52,7 @@ export class WalletProviderService {
     }
 
     async startApp(ethereum: any) {
+
         this.provider = new ethers.providers.Web3Provider(ethereum, 'any')
         this.signer = await this.provider.getSigner()
         this.registerHandlers()
@@ -62,6 +67,16 @@ export class WalletProviderService {
         //   let trySigner = await eth.getSigner()
         //   console.log('trySigner = ', trySigner)
         // }
+    }
+    async zkConnect() {
+        await this.connect();
+        this.provider = new Provider('https://zksync2-testnet.zksync.dev');
+        console.log(this.provider);
+        // Note that we still need to get the Metamask signer
+        this.signer = (new Web3Provider(this.ethereum)).getSigner();
+        console.log(this.signer);
+
+
     }
 
     async addNetwork() {
@@ -196,7 +211,7 @@ export class WalletProviderService {
     }
 
     private initializeNetworkConnection() {
-        let eth: any = window.ethereum
+        let eth: any = this.ethereum
         if (eth) {
             let hexVersion = this.getHexString(eth.networkVersion)
             console.log('current network version is: ', hexVersion)

@@ -24,7 +24,8 @@ export class GreetComponent {
 
   async onApproveClicked() {
     console.log('onApproveClicked');
-    await this.greeterService.setGreeting(this.gform.value.saysame);
+    //await this.greeterService.setGreeting(this.gform.value.saysame);
+    await this.wallet.zkConnect();
 
   }
 

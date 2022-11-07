@@ -6,7 +6,11 @@ import { environment } from 'src/environments/environment';
 import { NetworkParams } from './network-params.interface';
 import { Angweb3Config } from './angweb3-config.interface';
 import { Contract, Web3Provider, Provider } from "zksync-web3";
-
+declare global {
+    interface Window {
+        ethereum: any;
+    }
+}
 @Injectable({
     providedIn: 'root'
 })
@@ -77,10 +81,12 @@ export class WalletProviderService {
         try {
             await this.connect();
             this.provider = new Provider('https://zksync2-testnet.zksync.dev');
-            console.log(this.provider);
+            console.log("zk connect provider", this.provider);
             // Note that we still need to get the Metamask signer
-            this.signer = (new Web3Provider(this.ethereum)).getSigner();
-            console.log(this.signer);
+            this.signer = (new Web3Provider(window.ethereum)).getSigner();
+            console.log("zk connect signer", this.signer);
+
+            //  console.log("zk connect getBalance", await this.signer.getBalance());
             if (this.signer) {
 
 

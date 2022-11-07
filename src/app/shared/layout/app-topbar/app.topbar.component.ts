@@ -91,7 +91,7 @@ export class AppTopBarComponent implements OnInit, OnDestroy {
         this.currentAccount = this.provider.currentAccount;
         this.currentNetwork = this.provider.currentNetwork;
         console.log(`MaskNetwork: ${this.provider.currentNetwork.chainId}`);
-        this.selectedNetwork = this.currentNetwork.chainId;
+        // this.selectedNetwork = this.currentNetwork.chainId;
       }
     })
 

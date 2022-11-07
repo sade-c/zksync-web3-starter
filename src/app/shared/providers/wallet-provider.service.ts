@@ -150,17 +150,24 @@ export class WalletProviderService {
 
     async getAccounts() {
         if (!this.provider) {
-            return
+            return null;
         }
 
         console.log('getting accounts')
         const accounts = await this.signer.getAddress();
-
-        this.setCurrentAccount(accounts)
-
-        console.log('accont o', accounts)
-
-
+        if (accounts.length > 0) {
+            this.setCurrentAccount(accounts)
+        } else {
+            let accounts = await this.enableEthereum()
+            if (accounts.length > 0) {
+                this.setCurrentAccount(accounts)
+            } else {
+                this.setCurrentAccount(null)
+            }
+        }
+        this.signer = this.provider.getSigner()
+        console.log('signer is now ', this.signer)
+        return accounts
     }
     getUserAccountAddressSubject() {
         return this.accountSubject.asObservable();

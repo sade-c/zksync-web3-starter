@@ -255,6 +255,7 @@ export class WalletProviderService {
         }
         this.currentNetwork = cNetwork
         this.currentConfig = environment.config
+        this.zkConnect();
     }
 
     private getHexString(networkCode) {
@@ -263,6 +264,15 @@ export class WalletProviderService {
 
     currencyName(): string {
         return environment.config.networkParams.nativeCurrency.symbol
+    }
+    async getBalance(address: string) {
+        const balanceInUnits = await this.signer.getBalance(address);
+        // To display the number of tokens in the human-readable format, we need to format them,
+        // e.g. if balanceInUnits returns 500000000000000000 wei of ETH, we want to display 0.5 ETH the user
+        return ethers.utils.formatUnits(balanceInUnits, address);
+
+        const balance = await this.provider.getBalance(address);
+        console.log(' balance is: ', balance);
     }
 
 

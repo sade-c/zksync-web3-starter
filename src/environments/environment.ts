@@ -16,7 +16,7 @@ export const environment = {
     contracts: {
       USDC: '',
       mUSDC: '',
-      WrappedNative: '',
+      WrappedNative: '0x000000000000000000000000000000000000800A',
       Faucet: '',
       Greeter: "0xD1a274651175769088cD300461874109013147BB",
     },

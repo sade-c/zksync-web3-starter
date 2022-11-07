@@ -7,6 +7,7 @@ import { environment } from '../../environments/environment';
 import { DefaultProviderService } from '../shared/providers/default-provider.service';
 import { WalletProviderService } from '../shared/providers/wallet-provider.service';
 import { ProviderErrors } from '../shared/model/eip1193/providerErrors';
+import { Contract, Web3Provider, Provider, utils } from "zksync-web3";
 
 @Injectable({
     providedIn: 'root'
@@ -19,7 +20,7 @@ export class GreeterService {
         this.greeterContract = new ethers.Contract(
             wallet.currentConfig.contracts.Greeter,
             Greeter.abi,
-            provider.provider
+            provider.signer
         );
     }
 
@@ -30,16 +31,41 @@ export class GreeterService {
         return greet;
     }
     async setGreeting(greeting: string) {
-        let greet = this.greeterContract.connect(this.wallet.signer).setGreeting(greeting)
-            .then(() => { })
-            .catch((err) => {
-                if (err.code == 4001) {
+        const txHandle = await this.greeterContract.connect(this.provider.signer).setGreeting(greeting, await this.getOverrides(greeting));
 
-                    console.error("error", ProviderErrors[err.code].title);
-                }
-            });
+    }
+
+    async getOverrides(greeting: string) {
 
 
-        return greet;
+        console.log("0")
+        const testnetPaymaster = await this.wallet.provider.getTestnetPaymasterAddress();
+        console.log("1", testnetPaymaster)
+        console.log("1")
+        const gasPrice = await this.wallet.provider.getGasPrice();
+        const gasLimit = await this.greeterContract.estimateGas.setGreeting(greeting);
+        const fee = gasPrice.mul(gasLimit);
+        console.log("2")
+        console.log("2", fee)
+        const paymasterParams = utils.getPaymasterParams(testnetPaymaster, {
+            type: 'ApprovalBased',
+            token: "0x000000000000000000000000000000000000800A",
+            minimalAllowance: fee,
+            innerInput: new Uint8Array()
+        });
+        console.log("3")
+        console.log("3", paymasterParams)
+        return {
+            maxFeePerGas: gasPrice,
+            maxPriorityFeePerGas: ethers.BigNumber.from(0),
+            gasLimit,
+            customData: {
+                ergsPerPubdata: utils.DEFAULT_ERGS_PER_PUBDATA_LIMIT,
+                paymasterParams
+            }
+        };
+
+
+
     }
 }

@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { NetworkParams } from './network-params.interface';
 import { Angweb3Config } from './angweb3-config.interface';
 import { Contract, Web3Provider, Provider } from "zksync-web3";
+
 declare global {
     interface Window {
         ethereum: any;
@@ -68,12 +69,18 @@ export class WalletProviderService {
 
         } else {
         }
-        // if (provider !== window.ethereum) {
-        //   console.error('multiple wallets installed')
-        // } else {
-        //   let trySigner = await eth.getSigner()
-        //   console.log('trySigner = ', trySigner)
-        // }
+
+    }
+    async szkConnect() {
+        window.ethereum.request({ method: 'eth_requestAccounts' })
+            .then(async accounts => {
+                if (+window.ethereum.networkVersion == 280) {
+                    //  await this.connectMetaMask();
+
+                }
+            })
+            .catch((e) => console.log(e));
+        return true
     }
     async zkConnect() {
 
@@ -83,10 +90,11 @@ export class WalletProviderService {
             this.provider = new Provider('https://zksync2-testnet.zksync.dev');
             console.log("zk connect provider", this.provider);
             // Note that we still need to get the Metamask signer
+
             this.signer = (new Web3Provider(window.ethereum)).getSigner();
             console.log("zk connect signer", this.signer);
-
-            //  console.log("zk connect getBalance", await this.signer.getBalance());
+            const balance = await this.signer.getBalance();
+            console.log("zk connect getBalance", balance);
             if (this.signer) {
 
 
@@ -146,20 +154,13 @@ export class WalletProviderService {
         }
 
         console.log('getting accounts')
-        const accounts = await this.provider.send('eth_requestAccounts', []);
-        if (accounts.length > 0) {
-            this.setCurrentAccount(accounts[0])
-        } else {
-            let accounts = await this.enableEthereum()
-            if (accounts.length > 0) {
-                this.setCurrentAccount(accounts[0])
-            } else {
-                this.setCurrentAccount(null)
-            }
-        }
-        this.signer = this.provider.getSigner()
-        console.log('signer is now ', this.signer)
-        return accounts
+        const accounts = await this.signer.getAddress();
+
+        this.setCurrentAccount(accounts)
+
+        console.log('accont o', accounts)
+
+
     }
     getUserAccountAddressSubject() {
         return this.accountSubject.asObservable();

@@ -1,0 +1,6 @@
+{
+    "/": {
+        "target": "https://zksync2-testnet.zksync.dev",
+        "secure": false
+    }
+}

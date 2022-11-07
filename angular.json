@@ -141,7 +141,8 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "Angweb3:build:production"
+              "browserTarget": "Angweb3:build:production",
+              "proxyConfig": "src/proxy.conf.json"
             },
             "polygon": {
               "browserTarget": "Angweb3:build:polygon"
@@ -153,7 +154,8 @@
               "browserTarget": "Angweb3:build:hardhat"
             },
             "development": {
-              "browserTarget": "Angweb3:build:development"
+              "browserTarget": "Angweb3:build:development",
+              "proxyConfig": "src/proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"

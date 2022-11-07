@@ -5,12 +5,12 @@
 export const environment = {
   production: false,
 
-  ZKNETWORK: "https://rinkeby-api.zksync.io/jsrpc",
+  ZKNETWORK: "https://zksync2-testnet.zksync.dev",
   IPFS_GATEWAY: "https://ipfs.io/ipfs/",
-  ZK_EXPLORER: "https://ropsten.zkscan.io/explorer/transactions/",
+  ZK_EXPLORER: "https://zksync2-testnet.zkscan.io",
   ETH_EXPLORER: "https://ropsten.etherscan.io/tx/",
   ZK_WALLET: "https://wallet.zksync.io/",
-  environmentName: 'Avalanche Testnet C-Chain',
+  environmentName: 'zkSyncGoerli',
   jsonRpcUrl: 'https://ropsten.infura.io/v3/9c3496dd968d444c8449af5e09168512',
   config: {
     contracts: {
@@ -21,20 +21,20 @@ export const environment = {
       Greeter: "0x2b7Ca997504485BFA6dDED203A25F8aAFc9496A8",
     },
     networkParams: {
-      chainId: '0xA869',
-      chainName: 'Avalanche Testnet C-Chain',
+      chainId: '280',
+      chainName: 'zkSync 2.0 Testnet Goerli',
       nativeCurrency: {
-        name: 'Avalanche',
-        symbol: 'AVAX',
+        name: 'eth',
+        symbol: 'eth',
         decimals: 18
       },
-      rpcUrls: ['https://api.avax-test.network/ext/bc/C/rpc'],
-      blockExplorerUrls: ['https://testnet.snowtrace.io/']
+      rpcUrls: ['https://zksync2-testnet.zksync.dev'],
+      blockExplorerUrls: ['https://zksync2-testnet.zkscan.io']
     },
     ui: {
-      chainName: 'Avalanche',
-      logo: '/assets/logos/avalanche-avax-logo.png',
-      txUrlPrefix: 'https://testnet.snowtrace.io/tx/'
+      chainName: 'zkSync',
+      logo: '/assets/logos/zksync.png',
+      txUrlPrefix: 'https://zksync2-testnet.zkscan.io'
     }
   },
 }

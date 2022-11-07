@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 import { NetworkParams } from './network-params.interface';
 import { Angweb3Config } from './angweb3-config.interface';
 import { Contract, Web3Provider, Provider } from "zksync-web3";
-
+//. zk greet contrat address  0xD1a274651175769088cD300461874109013147BB
 declare global {
     interface Window {
         ethereum: any;

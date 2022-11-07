@@ -18,7 +18,7 @@ export const environment = {
       mUSDC: '',
       WrappedNative: '',
       Faucet: '',
-      Greeter: "0x2b7Ca997504485BFA6dDED203A25F8aAFc9496A8",
+      Greeter: "0xD1a274651175769088cD300461874109013147BB",
     },
     networkParams: {
       chainId: '280',

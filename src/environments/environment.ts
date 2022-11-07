@@ -11,7 +11,7 @@ export const environment = {
   ETH_EXPLORER: "https://ropsten.etherscan.io/tx/",
   ZK_WALLET: "https://wallet.zksync.io/",
   environmentName: 'zkSyncGoerli',
-  jsonRpcUrl: 'https://ropsten.infura.io/v3/9c3496dd968d444c8449af5e09168512',
+  jsonRpcUrl: 'https://zksync2-testnet.zksync.dev',
   config: {
     contracts: {
       USDC: '',

@@ -20,7 +20,7 @@ export class GreeterService {
         this.greeterContract = new ethers.Contract(
             wallet.currentConfig.contracts.Greeter,
             Greeter.abi,
-            provider.signer
+            provider.provider
         );
     }
 

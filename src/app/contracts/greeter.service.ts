@@ -39,7 +39,7 @@ export class GreeterService {
 
 
         console.log("0")
-        const testnetPaymaster = await this.wallet.provider.getTestnetPaymasterAddress();
+        const testnetPaymaster = "0x2e4805d59193e173c9c8125b4fc8f7f9c7a3a3ed";
         console.log("1", testnetPaymaster)
         console.log("1")
         const gasPrice = await this.wallet.provider.getGasPrice();
@@ -49,9 +49,9 @@ export class GreeterService {
         console.log("2", fee)
         const paymasterParams = utils.getPaymasterParams(testnetPaymaster, {
             type: 'ApprovalBased',
-            token: "0x000000000000000000000000000000000000800A",
+            token: "0x2e4805d59193e173c9c8125b4fc8f7f9c7a3a3ed",
             minimalAllowance: fee,
-            innerInput: new Uint8Array()
+            innerInput: new Uint8Array(0)
         });
         console.log("3")
         console.log("3", paymasterParams)
@@ -61,7 +61,7 @@ export class GreeterService {
             gasLimit,
             customData: {
                 ergsPerPubdata: utils.DEFAULT_ERGS_PER_PUBDATA_LIMIT,
-                paymasterParams
+                //paymasterParams
             }
         };
 

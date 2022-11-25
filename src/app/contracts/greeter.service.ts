@@ -39,7 +39,7 @@ export class GreeterService {
 
 
         console.log("0")
-        const testnetPaymaster = "0x2e4805d59193e173c9c8125b4fc8f7f9c7a3a3ed";
+        const testnetPaymaster = await this.wallet.provider.getTestnetPaymasterAddress();
         console.log("1", testnetPaymaster)
         console.log("1")
         const gasPrice = await this.wallet.provider.getGasPrice();
